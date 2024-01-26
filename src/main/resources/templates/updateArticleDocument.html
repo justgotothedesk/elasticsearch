@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <a th:href="@{/}" >홈 화면으로</a>
+    <hr>
+    <h2>게시글 작성</h2>
+
+    <form action="#" th:action="@{/saveArticle}" th:object="${article}" method="POST">
+        <input type="hidden" th:field="*{id}" placeholder="Article Id">
+
+        <input type="text" th:field="*{title}" placeholder="Article Title">
+
+        <input type="text" th:field="*{content}" placeholder="Article Content">
+
+        <input type="text" th:field="*{writer}" placeholder="Article Writer">
+
+        <button type="submit">수정하기</button>
+    </form>
+</div>
+</body>
+</html>
