@@ -3,6 +3,8 @@ package com.example.elasticsearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -23,5 +25,9 @@ public class UserService {
 
     public User getUserById(String id) {
         return userRepository.findById(id).orElse(null);
+    }
+
+    public List<User> getUserByName(String name) {
+        return userRepository.findByName(name);
     }
 }
