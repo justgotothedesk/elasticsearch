@@ -13,13 +13,19 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public String addUser() {
-        User user = new User();
-        user.setId("1");
-        user.setName("John Doe");
-        user.setAge(20);
-        userService.saveUser(user);
+    public String home() {
+        return "home";
+    }
 
-        return "redirect:/users";
+    @GetMapping("/add")
+    public String addUser() {
+        for (int i = 5; i < 40000; i++) {
+            User user = new User();
+            user.setId(String.valueOf(i));
+            user.setName("temp"+String.valueOf(i));
+            user.setAge(i);
+            userService.saveUser(user);
+        }
+        return "redirect:/";
     }
 }
