@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class UserController {
 
     private final UserService userService;
+    private final UserJPAService userJPAService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserJPAService userJPAService) {
         this.userService = userService;
+        this.userJPAService = userJPAService;
     }
 
     @GetMapping("/")
@@ -19,12 +21,12 @@ public class UserController {
 
     @GetMapping("/add")
     public String addUser() {
-        for (int i = 5; i < 40000; i++) {
-            User user = new User();
+        for (int i = 10000; i < 14884; i++) {
+            UserJPA user = new UserJPA();
             user.setId(String.valueOf(i));
             user.setName("temp"+String.valueOf(i));
             user.setAge(i);
-            userService.saveUser(user);
+            userJPAService.saveUser(user);
         }
         return "redirect:/";
     }

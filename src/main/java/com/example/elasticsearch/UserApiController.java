@@ -12,14 +12,23 @@ import java.util.List;
 public class UserApiController {
 
     private final UserService userService;
+    private final UserJPAService userJPAService;
 
-    public UserApiController(UserService userService) {
+    public UserApiController(UserService userService, UserJPAService userJPAService) {
         this.userService = userService;
+        this.userJPAService = userJPAService;
     }
 
-    @GetMapping("/find")
+    @GetMapping("/findelastic")
     public List<User> findUser(@RequestParam String name) {
-        List<User> users = userService.getUserByName(name);
+        List<User> users = userService.findByNameWildcard(name);
+
+        return users;
+    }
+
+    @GetMapping("/findrdbms")
+    public List<UserJPA> findJPAUser(@RequestParam String name) {
+        List<UserJPA> users = userJPAService.findByNameContaining(name);
 
         return users;
     }
