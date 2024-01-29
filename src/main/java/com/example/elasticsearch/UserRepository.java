@@ -10,5 +10,6 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends ElasticsearchRepository<User, String> {
     List<User> findByName(String name);
-
+    @Query("{\"wildcard\":{\"name.keyword\":\"*?0*\"}}")
+    List<User> findByNameWildcard(String name);
 }

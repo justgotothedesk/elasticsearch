@@ -30,4 +30,8 @@ public class UserService {
     public List<User> getUserByName(String name) {
         return userRepository.findByName(name);
     }
+
+    public List<User> findByNameWildcard(String name) {
+        return userRepository.findByNameWildcard(name);
+    }
 }
