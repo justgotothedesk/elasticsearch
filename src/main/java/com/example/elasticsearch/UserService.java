@@ -1,6 +1,8 @@
 package com.example.elasticsearch;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,4 +36,12 @@ public class UserService {
     public List<User> findByNameWildcard(String name) {
         return userRepository.findByNameWildcard(name);
     }
+
+    public List<User> findByAgeWildcard(String age) {
+        return userRepository.findByAgeWildcard(age);
+    }
+
+//    public Page<User> findByAgeWildcard(int age, Pageable pageable) {
+//        return userRepository.findByAgeWildcard(age, pageable);
+//    }
 }
