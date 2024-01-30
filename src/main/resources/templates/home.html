@@ -10,5 +10,39 @@
     <button>Add</button>
 </a>
 
+<form th:action="@{/search}" method="get">
+    <label for="query">검색어:</label>
+    <input type="text" id="query" name="query" />
+    <label for="searchType">검색 항목:</label>
+    <select id="searchType" name="searchType">
+        <option value="name">이름</option>
+        <option value="age">나이</option>
+    </select>
+
+    <button type="submit" class="btn btn-primary">검색</button>
+</form>
+<div th:unless="${users == null or #lists.isEmpty(users)}">
+    <h2>검색 결과</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.age}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:if="${users == null or #lists.isEmpty(users)}">
+    <p>검색 결과가 없습니다.</p>
+</div>
+
 </body>
 </html>

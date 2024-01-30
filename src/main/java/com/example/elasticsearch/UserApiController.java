@@ -19,12 +19,12 @@ public class UserApiController {
         this.userJPAService = userJPAService;
     }
 
-    @GetMapping("/findelastic")
-    public List<User> findUser(@RequestParam String name) {
-        List<User> users = userService.findByNameWildcard(name);
-
-        return users;
-    }
+//    @GetMapping("/findelastic")
+//    public List<User> findUser(@RequestParam String name) {
+//        List<User> users = userService.findByNameWildcard(name);
+//
+//        return users;
+//    }
 
     @GetMapping("/findrdbms")
     public List<UserJPA> findJPAUser(@RequestParam String name) {
