@@ -44,5 +44,22 @@
     <p>검색 결과가 없습니다.</p>
 </div>
 
+<div th:if="${totalPages > 1}">
+    <div>
+        <span th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}">
+            <a th:href="@{/search(query=${query}, searchType=${searchType}, page=${pageNumber})}"
+               th:text="${pageNumber + 1}"
+               th:class="${pageNumber == currentPage ? 'current-page' : ''}"></a>
+        </span>
+    </div>
+</div>
+
+<style>
+    .current-page {
+        font-weight: bold;
+        color: red;
+    }
+</style>
+
 </body>
 </html>
