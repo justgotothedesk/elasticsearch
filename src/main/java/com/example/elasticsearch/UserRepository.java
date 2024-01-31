@@ -13,11 +13,7 @@ import java.util.Optional;
 public interface UserRepository extends ElasticsearchRepository<User, String> {
     List<User> findByName(String name);
     @Query("{\"wildcard\":{\"name.keyword\":\"*?0*\"}}")
-    List<User> findByNameWildcard(String name);
+    Page<User> findByNameWildcard(String name, Pageable pageable);
 
-    @Query("{\"wildcard\":{\"age.keyword\":\"*?0*\"}}")
-    List<User> findByAgeWildcard(String age);
-
-//    @Query("{\"wildcard\":{\"age.keyword\":\"*?0*\"}}")
-//    Page<User> findByAgeWildcard(int age, Pageable pageable);
+    Page<User> findByAge(int age, Pageable pageable);
 }

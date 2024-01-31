@@ -14,11 +14,9 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    private final UserJPAService userJPAService;
 
-    public UserController(UserService userService, UserJPAService userJPAService) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.userJPAService = userJPAService;
     }
 
     @GetMapping("/")
@@ -28,52 +26,39 @@ public class UserController {
 
     @GetMapping("/add")
     public String addUser() {
-//        for (int i = 10000; i < 14884; i++) {
-//            UserJPA user = new UserJPA();
-//            user.setId(String.valueOf(i));
-//            user.setName("temp"+String.valueOf(i));
-//            user.setAge(i);
-//            userJPAService.saveUser(user);
-//        }
         return "redirect:/";
     }
 
     @GetMapping("/search")
-    public String search(@RequestParam String query, @RequestParam String searchType, Model model) {
-        if (searchType.equals("name")) {
-            List<User> users = userService.findByNameWildcard(query);
+    public String search(
+            @RequestParam String query,
+            @RequestParam String searchType,
+            @RequestParam(defaultValue = "0") int page,
+            Model model) {
+
+        int pageSize = 10;
+        Pageable pageable = PageRequest.of(page, pageSize);
+
+        if (searchType.equals("name") && !query.isEmpty()) {
+            Page<User> userPage = userService.findByNameWildcard(query, pageable);
+            List<User> users = userPage.getContent();
+
             model.addAttribute("users", users);
-        } else if (searchType.equals("age")) {
-            List<User> users = userService.findByAgeWildcard(query);
+            model.addAttribute("currentPage", page);
+            model.addAttribute("totalPages", userPage.getTotalPages());
+            model.addAttribute("query", query);
+            model.addAttribute("searchType", searchType);
+        } else if (searchType.equals("age") && !query.isEmpty()) {
+            Page<User> userPage = userService.findByAge(Integer.parseInt(query), pageable);
+            List<User> users = userPage.getContent();
+
             model.addAttribute("users", users);
+            model.addAttribute("currentPage", page);
+            model.addAttribute("totalPages", userPage.getTotalPages());
+            model.addAttribute("query", query);
+            model.addAttribute("searchType", searchType);
         }
+
         return "home";
     }
-
-//    @GetMapping("/search")
-//    public String search(@RequestParam String query, @RequestParam String searchType,
-//                         @RequestParam(defaultValue = "0") int page, Model model) {
-//        int pageSize = 10;
-//
-//        List<User> users;
-//        Pageable pageable = PageRequest.of(page, pageSize);
-//
-//        if (searchType.equals("name")) {
-//            Page<User> userPage = userService.findByNameWildcard(query, pageable);
-//            users = userPage.getContent();
-//
-//            model.addAttribute("users", users);
-//            model.addAttribute("currentPage", page);
-//            model.addAttribute("totalPages", userPage.getTotalPages());
-//        } else if (searchType.equals("age")) {
-//            Page<User> userPage = userService.findByAgeWildcard(Integer.parseInt(query), pageable);
-//            users = userPage.getContent();
-//
-//            model.addAttribute("users", users);
-//            model.addAttribute("currentPage", page);
-//            model.addAttribute("totalPages", userPage.getTotalPages());
-//        }
-//
-//        return "home";
-//    }
 }

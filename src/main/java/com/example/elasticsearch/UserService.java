@@ -33,15 +33,11 @@ public class UserService {
         return userRepository.findByName(name);
     }
 
-    public List<User> findByNameWildcard(String name) {
-        return userRepository.findByNameWildcard(name);
+    public Page<User> findByNameWildcard(String name, Pageable pageable) {
+        return userRepository.findByNameWildcard(name, pageable);
     }
 
-    public List<User> findByAgeWildcard(String age) {
-        return userRepository.findByAgeWildcard(age);
+    public Page<User> findByAge(int age, Pageable pageable) {
+        return userRepository.findByAge(age, pageable);
     }
-
-//    public Page<User> findByAgeWildcard(int age, Pageable pageable) {
-//        return userRepository.findByAgeWildcard(age, pageable);
-//    }
 }
